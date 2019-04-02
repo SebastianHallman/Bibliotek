@@ -11,7 +11,7 @@ namespace Bibliotek
     class Program
     {
         // Markus E och Sebastian
-        //I Have been the master of this
+ 
         static void LäggTillBok()
         {
             StreamWriter skriv = new StreamWriter("data.txt", true);
