@@ -10,7 +10,7 @@ namespace Bibliotek
 {
     class Program
     {
-        // Markus E och Sebastian
+        // Markus E och Sebastian and the parrot
         //I Have been the master of this
         static void LäggTillBok()
         {
