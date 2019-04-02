@@ -277,9 +277,17 @@ namespace Bibliotek
                     {
                         hittadBok.LånadGetOrSet = true;
                         sr.Close();
-                        StreamWriter skriv = new StreamWriter("data.txt");
-                        skriv.Write(hittadBok.TitelGetOrSet + "," + hittadBok.FörfattareGetOrSet + "," + hittadBok.LånadGetOrSet);
-                        skriv.Close();
+                    
+                        string[] lines = File.ReadAllLines("data.txt");
+                        for (int i = 0; i < lines.Length; i++)
+                        {
+                            if (lines[i]== hittadBok.TitelGetOrSet + "," + hittadBok.FörfattareGetOrSet + ",false")
+                            {
+                                lines[i] = hittadBok.TitelGetOrSet + "," + hittadBok.FörfattareGetOrSet + "," + hittadBok.LånadGetOrSet;
+                            }
+                        }
+                        File.WriteAllLines("data.txt", lines);
+                    
 
                         if (hittadBok.LånadGetOrSet == true)
                         {
@@ -361,7 +369,7 @@ namespace Bibliotek
                     goto Admin;
                 case ConsoleKey.B:
                     lånaBok();
-                    // böcker = UppdateraBibliotek();
+                    böcker = UppdateraBibliotek();
                     goto Meny;
                 default:
                     Console.WriteLine("\nVar vänlig och mata in ett av de angivna alternativen");
