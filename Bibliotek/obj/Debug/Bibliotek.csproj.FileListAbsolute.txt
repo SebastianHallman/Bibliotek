@@ -7,3 +7,6 @@
 \\fs1.ad.ssis.nu\17seha\Documents\GitHub\Biblio\Bibliotek\Bibliotek\bin\Debug\Bibliotek.exe.config
 \\fs1.ad.ssis.nu\17seha\Documents\GitHub\Biblio\Bibliotek\Bibliotek\obj\Debug\Bibliotek.exe
 \\fs1.ad.ssis.nu\17seha\Documents\GitHub\Biblio\Bibliotek\Bibliotek\obj\Debug\Bibliotek.pdb
+\\fs1.ad.ssis.nu\17maer\Documents\GitHub\Bibliotek\Bibliotek\bin\Debug\Bibliotek.exe.config
+\\fs1.ad.ssis.nu\17maer\Documents\GitHub\Bibliotek\Bibliotek\obj\Debug\Bibliotek.exe
+\\fs1.ad.ssis.nu\17maer\Documents\GitHub\Bibliotek\Bibliotek\obj\Debug\Bibliotek.pdb
