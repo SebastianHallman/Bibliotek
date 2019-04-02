@@ -281,7 +281,7 @@ namespace Bibliotek
                         string[] lines = File.ReadAllLines("data.txt");
                         for (int i = 0; i < lines.Length; i++)
                         {
-                            if (lines[i]== hittadBok.TitelGetOrSet + "," + hittadBok.FörfattareGetOrSet + ",false")
+                            if (lines[i]== hittadBok.TitelGetOrSet + "," + hittadBok.FörfattareGetOrSet + ",false" || lines[i] == hittadBok.TitelGetOrSet + "," + hittadBok.FörfattareGetOrSet + ",False")
                             {
                                 lines[i] = hittadBok.TitelGetOrSet + "," + hittadBok.FörfattareGetOrSet + "," + hittadBok.LånadGetOrSet;
                             }
@@ -309,6 +309,72 @@ namespace Bibliotek
             }
         }
 
+        static void lämnaBok()
+        {
+            Console.Write("Vilken bok vill du lämna tilbaka? : ");
+            string sök = Console.ReadLine();
+            StreamReader sr = new StreamReader("data.txt");
+
+            string s, temptitel, tempförfattare, tempstatus;
+            int antal = 0;
+            Console.WriteLine();
+
+            while ((s = sr.ReadLine()) != null)
+            {
+                //  Console.Write(s);
+
+                string[] data = s.Split(',');
+
+                try
+                {
+                    temptitel = data[0];
+                    tempförfattare = data[1];
+                    tempstatus = data[2];
+                }
+                catch
+                {
+                    temptitel = "";
+                    tempförfattare = "";
+                    tempstatus = "false";
+                }
+                Bok hittadBok = new Bok(temptitel, tempförfattare, bool.Parse(tempstatus));
+
+                if (hittadBok.TitelGetOrSet == sök)
+                {
+                    antal++;
+
+                    if (hittadBok.LånadGetOrSet == true)
+                    {
+                        hittadBok.LånadGetOrSet = false;
+                        sr.Close();
+
+                        string[] lines = File.ReadAllLines("data.txt");
+                        for (int i = 0; i < lines.Length; i++)
+                        {
+                            if (lines[i] == hittadBok.TitelGetOrSet + "," + hittadBok.FörfattareGetOrSet + ",true" || lines[i] == hittadBok.TitelGetOrSet + "," + hittadBok.FörfattareGetOrSet + ",True")
+                            {
+                                lines[i] = hittadBok.TitelGetOrSet + "," + hittadBok.FörfattareGetOrSet + "," + hittadBok.LånadGetOrSet;
+                            }
+                        }
+                        File.WriteAllLines("data.txt", lines);
+                                              
+                        Console.WriteLine("Du har nu lämnat tillbaka " + hittadBok.TitelGetOrSet + " av " + hittadBok.FörfattareGetOrSet + "!");
+                        
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Boken är utlånad!");
+                    }
+                }
+            }
+            sr.Close();
+
+            if (antal == 0)
+            {
+                Console.WriteLine("Ingen bok hittades");
+            }
+        }
 
         static void SkrivLista(List<Bok> BiblioteksBöcker)
         {
@@ -356,6 +422,7 @@ namespace Bibliotek
                     SökFörfattare();
                     goto Meny;
                 case ConsoleKey.Oem6: //Å
+                    lämnaBok();
                     goto Meny;
                 case ConsoleKey.A:
                     böcker = UppdateraBibliotek();
