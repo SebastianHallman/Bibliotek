@@ -314,32 +314,7 @@ namespace Bibliotek
             //Inläsning av alla böcker i systemet
             List<Bok> böcker = new List<Bok>();
             böcker = UppdateraBibliotek();
-            /*            StreamReader sr = new StreamReader("data.txt");
-                        string s, temptitel, tempförfattare, tempstatus;
-
-                        while ((s = sr.ReadLine()) != null)
-                        {
-                            //  Console.Write(s);
-
-                            string[] data = s.Split(',');
-
-                            try
-                            {
-                                temptitel = data[0];
-                                tempförfattare = data[1];
-                                tempstatus = data[2];
-                            }
-                            catch
-                            {
-                                temptitel = "";
-                                tempförfattare = "";
-                                tempstatus = "false";
-                            }
-                            Bok nyBok = new Bok(temptitel, tempförfattare, bool.Parse(tempstatus));
-                            böcker.Add(nyBok);
-                        }
-                        sr.Close();
-            */
+            
 
 
 
@@ -349,9 +324,7 @@ namespace Bibliotek
             Console.WriteLine("Q Sök titel\t\tF Sök författare\t\tA Lista alla böcker");
             Console.WriteLine("B Låna bok\t\tÅ Återlämna bok");
             Console.WriteLine("Esc för att avsluta\tS för adminåtkomst");
-            //try
-            //{
-
+            
 
             Admin:
             var MenyVal = Console.ReadKey();
