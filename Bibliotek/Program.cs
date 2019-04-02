@@ -1,0 +1,411 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+using System.Threading;
+
+namespace Bibliotek
+{
+    class Program
+    {
+
+        static void LäggTillBok()
+        {
+            StreamWriter skriv = new StreamWriter("data.txt", true);
+            string temptitel, tempförfattare, tempstatus;
+
+            Console.Write("Bokens titel: ");
+            temptitel = Console.ReadLine();
+            Console.Write("Bokens författare: ");
+            tempförfattare = Console.ReadLine();
+            Console.Write("Bokens status (true/false): ");
+            tempstatus = Console.ReadLine();
+
+            skriv.WriteLine(temptitel + "," + tempförfattare + "," + tempstatus);
+
+            skriv.Close();
+
+        }
+        static void TaBortBok(List<Bok> BiblioteketsBöcker)
+        {
+            StreamReader läs = new StreamReader("data.txt");
+
+
+            string bok, s, temptitel, tempförfattare, tempstatus;
+
+            Console.Write("\tvilken bok vill du ta bort? ");
+            bok = Console.ReadLine();
+
+            while ((s = läs.ReadLine()) != null)
+            {
+
+                string[] data = s.Split(',');
+
+                temptitel = data[0];
+                //tempförfattare = data[1];
+                //tempstatus = data[2];
+
+                if (String.Compare(temptitel, bok) == 0)
+                {
+
+                    läs.Close();
+                    string RensaFil = null;
+                    File.WriteAllText("data.txt", RensaFil);
+                    StreamWriter skriv = new StreamWriter("data.txt", true);
+                    for (int i = 0; BiblioteketsBöcker.Count > i; i++)
+                    {
+                        if (bok != BiblioteketsBöcker[i].TitelGetOrSet)
+                        {
+                            skriv.WriteLine(BiblioteketsBöcker[i].TitelGetOrSet + "," + BiblioteketsBöcker[i].FörfattareGetOrSet + "," + BiblioteketsBöcker[i].LånadGetOrSet);
+                        }
+                    }
+                    skriv.Close();
+
+
+                    goto Klar;
+                }
+            }
+            Klar:
+            läs.Close();
+
+        }
+
+        static void RaderaFörfattare(List<Bok> BiblioteketsBöcker)
+        {
+            StreamReader läs = new StreamReader("data.txt");
+
+
+            string författare, s, temptitel, tempförfattare, tempstatus;
+
+            Console.Write("\tvilken författare vill du radera? ");
+            författare = Console.ReadLine();
+
+            while ((s = läs.ReadLine()) != null)
+            {
+
+                string[] data = s.Split(',');
+
+                //temptitel = data[0];
+                tempförfattare = data[1];
+                //tempstatus = data[2];
+
+                if (String.Compare(tempförfattare, författare) == 0)
+                {
+
+                    läs.Close();
+                    string RensaFil = null;
+                    File.WriteAllText("data.txt", RensaFil);
+                    StreamWriter skriv = new StreamWriter("data.txt", true);
+                    for (int i = 0; BiblioteketsBöcker.Count > i; i++)
+                    {
+                        if (författare != BiblioteketsBöcker[i].FörfattareGetOrSet)
+                        {
+                            skriv.WriteLine(BiblioteketsBöcker[i].TitelGetOrSet + "," + BiblioteketsBöcker[i].FörfattareGetOrSet + "," + BiblioteketsBöcker[i].LånadGetOrSet);
+                        }
+                    }
+                    skriv.Close();
+
+
+                    goto Klar;
+                }
+            }
+            Klar:
+            läs.Close();
+
+        }
+
+        static List<Bok> UppdateraBibliotek()
+        {
+            List<Bok> BiblioteksBöcker = new List<Bok>();
+            StreamReader sr = new StreamReader("data.txt");
+            string s, temptitel, tempförfattare, tempstatus;
+            Console.WriteLine();
+            while ((s = sr.ReadLine()) != null)
+            {
+                //  Console.Write(s);
+
+                string[] data = s.Split(',');
+
+                try
+                {
+                    temptitel = data[0];
+                    tempförfattare = data[1];
+                    tempstatus = data[2];
+                }
+                catch
+                {
+                    temptitel = "";
+                    tempförfattare = "";
+                    tempstatus = "false";
+                }
+                Bok nyBok = new Bok(temptitel, tempförfattare, bool.Parse(tempstatus));
+                BiblioteksBöcker.Add(nyBok);
+                
+            }
+            sr.Close();
+            return BiblioteksBöcker;
+        }
+
+        static void SökBok()
+        {
+
+            Console.Write("Vilken bok söker du? : ");
+            string sök = Console.ReadLine();
+            StreamReader sr = new StreamReader("data.txt");
+            string s, temptitel, tempförfattare, tempstatus;
+            int antal = 0;
+            Console.WriteLine();
+
+            while ((s = sr.ReadLine()) != null)
+            {
+                //  Console.Write(s);
+
+                string[] data = s.Split(',');
+
+                try
+                {
+                    temptitel = data[0];
+                    tempförfattare = data[1];
+                    tempstatus = data[2];
+                }
+                catch
+                {
+                    temptitel = "";
+                    tempförfattare = "";
+                    tempstatus = "false";
+                }
+                Bok hittadBok = new Bok(temptitel, tempförfattare, bool.Parse(tempstatus));
+
+                if (hittadBok.TitelGetOrSet == sök)
+                {
+                    Console.WriteLine("Titel: " + hittadBok.TitelGetOrSet + ",\t\t\tFörfattare: " + hittadBok.FörfattareGetOrSet + ",\t\t\tLånad: " + hittadBok.LånadGetOrSet);
+                    antal++;
+                }
+
+
+            }
+            sr.Close();
+
+            if (antal == 0)
+            {
+                Console.WriteLine("Ingen bok hittades");
+            }
+        }
+
+        static void SökFörfattare()
+        {
+
+            Console.Write("Vilken författare söker du? : ");
+            string sök = Console.ReadLine();
+            StreamReader sr = new StreamReader("data.txt");
+            string s, temptitel, tempförfattare, tempstatus;
+            int antal = 0;
+            Console.WriteLine();
+
+            while ((s = sr.ReadLine()) != null)
+            {
+                //  Console.Write(s);
+
+                string[] data = s.Split(',');
+
+                try
+                {
+                    temptitel = data[0];
+                    tempförfattare = data[1];
+                    tempstatus = data[2];
+                }
+                catch
+                {
+                    temptitel = "";
+                    tempförfattare = "";
+                    tempstatus = "false";
+                }
+                Bok hittadBok = new Bok(temptitel, tempförfattare, bool.Parse(tempstatus));
+
+                if (hittadBok.FörfattareGetOrSet == sök)
+                {
+                    Console.WriteLine("Titel: " + hittadBok.TitelGetOrSet + ",\t\t\tFörfattare: " + hittadBok.FörfattareGetOrSet + ",\t\t\tLånad: " + hittadBok.LånadGetOrSet);
+                    antal++;
+                }
+
+
+            }
+            sr.Close();
+
+            if (antal == 0)
+            {
+                Console.WriteLine("Ingen bok hittades");
+            }
+        }
+
+        static void lånaBok()
+        {
+            Console.Write("Vilken bok vill du låna? : ");
+            string sök = Console.ReadLine();
+            StreamReader sr = new StreamReader("data.txt");
+
+            string s, temptitel, tempförfattare, tempstatus;
+            int antal = 0;
+            Console.WriteLine();
+
+            while ((s = sr.ReadLine()) != null)
+            {
+                //  Console.Write(s);
+
+                string[] data = s.Split(',');
+
+                try
+                {
+                    temptitel = data[0];
+                    tempförfattare = data[1];
+                    tempstatus = data[2];
+                }
+                catch
+                {
+                    temptitel = "";
+                    tempförfattare = "";
+                    tempstatus = "false";
+                }
+                Bok hittadBok = new Bok(temptitel, tempförfattare, bool.Parse(tempstatus));
+
+                if (hittadBok.TitelGetOrSet == sök)
+                {
+                    antal++;
+
+                    if (hittadBok.LånadGetOrSet == false)
+                    {
+                        hittadBok.LånadGetOrSet = true;
+                        if (hittadBok.LånadGetOrSet == true)
+                        {
+                            Console.WriteLine("Du har nu lånat " + hittadBok.TitelGetOrSet + " av " + hittadBok.FörfattareGetOrSet + "!");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Boken är utlånad!");
+                    }
+                }
+            }
+            sr.Close();
+
+
+            if (antal == 0)
+            {
+                Console.WriteLine("Ingen bok hittades");
+            }
+
+
+        }
+
+
+        static void SkrivLista(List<Bok> BiblioteksBöcker)
+        {
+            for (int i = 0; i < BiblioteksBöcker.Count; i++)
+            {
+                Console.WriteLine("Titel: " + BiblioteksBöcker[i].TitelGetOrSet + ",\t\t\tFörfattare: " + BiblioteksBöcker[i].FörfattareGetOrSet + ",\t\t\tLånad: " + BiblioteksBöcker[i].LånadGetOrSet);
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            //Inläsning av alla böcker i systemet
+            List<Bok> böcker = new List<Bok>();
+            böcker = UppdateraBibliotek();
+            /*            StreamReader sr = new StreamReader("data.txt");
+                        string s, temptitel, tempförfattare, tempstatus;
+
+                        while ((s = sr.ReadLine()) != null)
+                        {
+                            //  Console.Write(s);
+
+                            string[] data = s.Split(',');
+
+                            try
+                            {
+                                temptitel = data[0];
+                                tempförfattare = data[1];
+                                tempstatus = data[2];
+                            }
+                            catch
+                            {
+                                temptitel = "";
+                                tempförfattare = "";
+                                tempstatus = "false";
+                            }
+                            Bok nyBok = new Bok(temptitel, tempförfattare, bool.Parse(tempstatus));
+                            böcker.Add(nyBok);
+                        }
+                        sr.Close();
+            */
+
+
+
+            Console.WriteLine("Välkommen till Författarnas utbytesklubb");
+            Meny:
+            Console.WriteLine("\nVad vill du göra hos oss idag?");
+            Console.WriteLine("Q Sök titel\t\tF Sök författare\t\tA Lista alla böcker");
+            Console.WriteLine("B Låna bok\t\tÅ Återlämna bok");
+            Console.WriteLine("Esc för att avsluta\tS för adminåtkomst");
+            //try
+            //{
+
+
+            Admin:
+            var MenyVal = Console.ReadKey();
+            switch (MenyVal.Key)
+            {
+                case ConsoleKey.Q:
+                    SökBok();
+                    goto Meny;
+                case ConsoleKey.T:
+                    böcker = UppdateraBibliotek();
+                    TaBortBok(böcker);
+                    goto Meny;
+                case ConsoleKey.R:
+                    böcker = UppdateraBibliotek();
+                    RaderaFörfattare(böcker);
+                    goto Meny;
+                case ConsoleKey.L:
+                    LäggTillBok();
+                    böcker = UppdateraBibliotek();
+                    goto Meny;
+                case ConsoleKey.F:
+                    SökFörfattare();
+                    goto Meny;
+                case ConsoleKey.Oem6: //Å
+                    goto Meny;
+                case ConsoleKey.A:
+                    böcker = UppdateraBibliotek();
+                    SkrivLista(böcker);
+                    goto Meny;
+                case ConsoleKey.E:
+                    Console.WriteLine("\nDu går nu vidare");
+                    break;
+                case ConsoleKey.S:
+                    Console.WriteLine("\nT för att ta bort bok\tR radera en författare\tL för att lägga till bok");
+                    goto Admin;
+                case ConsoleKey.B:
+                    lånaBok();
+                    böcker = UppdateraBibliotek();
+                    goto Meny;
+                default:
+                    Console.WriteLine("\nVar vänlig och mata in ett av de angivna alternativen");
+                    goto Meny;
+            }
+            //  }
+            //  catch
+            //{
+            //     Console.WriteLine("Debug 3 Sec");  Thread.Sleep(3000);
+            //   Console.WriteLine("\nVar vänlig och mata in ett av de angivna alternativen");
+            // goto Meny;
+            //  }
+        }
+
+
+    }
+}
+
+
+
