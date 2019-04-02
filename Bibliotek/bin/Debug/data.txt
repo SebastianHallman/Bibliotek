@@ -3,3 +3,4 @@ An Absolutely Remarkable Thing,Hank Green,True
 We Are Bob,E. Taylor,True
 The perks of being a wallflower,Stephen Chbosky,True
 Chimaera,Ian Irvine,false
+We are many,E. Taylor,false
