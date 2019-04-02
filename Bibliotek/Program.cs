@@ -11,7 +11,7 @@ namespace Bibliotek
     class Program
     {
         // Markus E och Sebastian and the parrot
-        //I Have been the master of this
+
         static void LäggTillBok()
         {
             StreamWriter skriv = new StreamWriter("data.txt", true);
@@ -143,7 +143,7 @@ namespace Bibliotek
                 }
                 Bok nyBok = new Bok(temptitel, tempförfattare, bool.Parse(tempstatus));
                 BiblioteksBöcker.Add(nyBok);
-                
+
             }
             sr.Close();
             return BiblioteksBöcker;
@@ -407,6 +407,3 @@ namespace Bibliotek
 
     }
 }
-
-
-
