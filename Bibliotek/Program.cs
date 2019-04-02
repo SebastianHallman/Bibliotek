@@ -243,7 +243,7 @@ namespace Bibliotek
         {
             Console.Write("Vilken bok vill du låna? : ");
             string sök = Console.ReadLine();
-            StreamReader sr = new StreamReader("data.txt", true);
+            StreamReader sr = new StreamReader("data.txt");
 
             string s, temptitel, tempförfattare, tempstatus;
             int antal = 0;
@@ -295,13 +295,10 @@ namespace Bibliotek
             }
             sr.Close();
 
-
             if (antal == 0)
             {
                 Console.WriteLine("Ingen bok hittades");
             }
-
-
         }
 
 
@@ -315,11 +312,12 @@ namespace Bibliotek
 
         static void Main(string[] args)
         {
+            Console.WriteLine("Välkommen till Författarnas utbytesklubb");
+
             //Inläsning av alla böcker i systemet
             List<Bok> böcker = new List<Bok>();
             böcker = UppdateraBibliotek();
 
-            Console.WriteLine("Välkommen till Författarnas utbytesklubb");
             Meny:
             Console.WriteLine("\nVad vill du göra hos oss idag?");
             Console.WriteLine("Q Sök titel\t\tF Sök författare\t\tA Lista alla böcker");
