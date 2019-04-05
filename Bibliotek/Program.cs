@@ -14,6 +14,7 @@ namespace Bibliotek
 
         static void LäggTillBok()
         {
+            // tar in bokens data och lägger till boken i boklistan
             StreamWriter skriv = new StreamWriter("data.txt", true);
             string temptitel, tempförfattare, tempstatus;
             bool KorrektionsTemp;
@@ -34,6 +35,7 @@ namespace Bibliotek
         }
         static void TaBortBok(List<Bok> BiblioteketsBöcker)
         {
+            // söker efter boken och tar bort den
             StreamReader läs = new StreamReader("data.txt");
 
 
@@ -48,12 +50,12 @@ namespace Bibliotek
                 string[] data = s.Split(',');
 
                 temptitel = data[0];
-                //tempförfattare = data[1];
-                //tempstatus = data[2];
+                
 
+                // kollar om boken finns, isåfall tar den bort den
                 if (String.Compare(temptitel, bok) == 0)
                 {
-
+                    // sparar all text i filen och skriver om filen utan den borttagna boken
                     läs.Close();
                     string RensaFil = null;
                     File.WriteAllText("data.txt", RensaFil);
@@ -68,6 +70,7 @@ namespace Bibliotek
                     skriv.Close();
 
 
+
                     goto Klar;
                 }
             }
@@ -78,6 +81,7 @@ namespace Bibliotek
 
         static void RaderaFörfattare(List<Bok> BiblioteketsBöcker)
         {
+            // tar bort alla böcker av samma författare
             StreamReader läs = new StreamReader("data.txt");
 
 
@@ -91,10 +95,10 @@ namespace Bibliotek
 
                 string[] data = s.Split(',');
 
-                //temptitel = data[0];
-                tempförfattare = data[1];
-                //tempstatus = data[2];
 
+                tempförfattare = data[1];
+
+                // samma procedur som i taBortBok() men med författarna
                 if (String.Compare(tempförfattare, författare) == 0)
                 {
 
@@ -122,13 +126,14 @@ namespace Bibliotek
 
         static List<Bok> UppdateraBibliotek()
         {
+            // uppdaterar våran lista så att den stämmer överräns med bokfilen
             List<Bok> BiblioteksBöcker = new List<Bok>();
             StreamReader sr = new StreamReader("data.txt");
             string s, temptitel, tempförfattare, tempstatus;
             Console.WriteLine();
             while ((s = sr.ReadLine()) != null)
             {
-                //  Console.Write(s);
+                
 
                 string[] data = s.Split(',');
 
@@ -155,7 +160,7 @@ namespace Bibliotek
 
         static void SökBok()
         {
-
+            // söker efter en bok och visar dem
             Console.Write("Vilken bok söker du? : ");
             string sök = Console.ReadLine();
             StreamReader sr = new StreamReader("data.txt");
@@ -203,6 +208,8 @@ namespace Bibliotek
         static void SökFörfattare()
         {
 
+            // söker efter författare och visar deras böcker
+
             Console.Write("Vilken författare söker du? : ");
             string sök = Console.ReadLine();
             StreamReader sr = new StreamReader("data.txt");
@@ -212,7 +219,7 @@ namespace Bibliotek
 
             while ((s = sr.ReadLine()) != null)
             {
-                //  Console.Write(s);
+                
 
                 string[] data = s.Split(',');
 
@@ -248,6 +255,7 @@ namespace Bibliotek
 
         static void lånaBok()
         {
+            // Om boken finns så kan man låna den, annars visar den att den är lånad
             Console.Write("Vilken bok vill du låna? : ");
             string sök = Console.ReadLine();
             StreamReader sr = new StreamReader("data.txt");
@@ -258,7 +266,7 @@ namespace Bibliotek
 
             while ((s = sr.ReadLine()) != null)
             {
-                //  Console.Write(s);
+                
 
                 string[] data = s.Split(',');
 
@@ -318,6 +326,7 @@ namespace Bibliotek
 
         static void lämnaBok()
         {
+            // Om boken är utlämnad kan man återlämna den
             Console.Write("Vilken bok vill du lämna tilbaka? : ");
             string sök = Console.ReadLine();
             StreamReader sr = new StreamReader("data.txt");
@@ -328,7 +337,7 @@ namespace Bibliotek
 
             while ((s = sr.ReadLine()) != null)
             {
-                //  Console.Write(s);
+                
 
                 string[] data = s.Split(',');
 
