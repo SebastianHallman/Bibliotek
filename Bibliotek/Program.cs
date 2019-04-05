@@ -16,6 +16,7 @@ namespace Bibliotek
         {
             StreamWriter skriv = new StreamWriter("data.txt", true);
             string temptitel, tempförfattare, tempstatus;
+            bool KorrektionsTemp;
 
             Console.Write("Bokens titel: ");
             temptitel = Console.ReadLine();
@@ -23,6 +24,10 @@ namespace Bibliotek
             tempförfattare = Console.ReadLine();
             Console.Write("Bokens status (true/false): ");
             tempstatus = Console.ReadLine();
+            try
+            { KorrektionsTemp = bool.Parse(tempstatus); }
+            catch
+            { tempstatus = "false"; }
             skriv.WriteLine(temptitel + "," + tempförfattare + "," + tempstatus);
             skriv.Close();
 
@@ -176,6 +181,7 @@ namespace Bibliotek
                     tempförfattare = "";
                     tempstatus = "false";
                 }
+
                 Bok hittadBok = new Bok(temptitel, tempförfattare, bool.Parse(tempstatus));
 
                 if (hittadBok.TitelGetOrSet == sök)
@@ -429,9 +435,9 @@ namespace Bibliotek
                     böcker = UppdateraBibliotek();
                     SkrivLista(böcker);
                     goto Meny;
-                case ConsoleKey.Escape:
+                case ConsoleKey.Escape:
                     Console.WriteLine("\nDu går nu vidare");
-                    break;
+                      break;
                 case ConsoleKey.S:
                     Console.WriteLine("\nT för att ta bort bok\tR radera en författare\tL för att lägga till bok");
                     goto Admin;
