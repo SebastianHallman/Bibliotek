@@ -32,7 +32,7 @@ namespace Bibliotek
             StreamReader läs = new StreamReader("data.txt");
 
 
-            string bok, s, temptitel, tempförfattare, tempstatus;
+            string bok, s, temptitel;
 
             Console.Write("\tvilken bok vill du ta bort? ");
             bok = Console.ReadLine();
@@ -76,7 +76,7 @@ namespace Bibliotek
             StreamReader läs = new StreamReader("data.txt");
 
 
-            string författare, s, temptitel, tempförfattare, tempstatus;
+            string författare, s, tempförfattare;
 
             Console.Write("\tvilken författare vill du radera? ");
             författare = Console.ReadLine();
@@ -139,8 +139,9 @@ namespace Bibliotek
                     tempförfattare = "";
                     tempstatus = "false";
                 }
-                Bok nyBok = new Bok(temptitel, tempförfattare, bool.Parse(tempstatus));
-                BiblioteksBöcker.Add(nyBok);
+                try { Bok nyBok = new Bok(temptitel, tempförfattare, bool.Parse(tempstatus)); BiblioteksBöcker.Add(nyBok); }
+                catch { Bok nyBok = new Bok(temptitel, tempförfattare, false); BiblioteksBöcker.Add(nyBok); }
+               
 
             }
             sr.Close();
@@ -428,7 +429,7 @@ namespace Bibliotek
                     böcker = UppdateraBibliotek();
                     SkrivLista(böcker);
                     goto Meny;
-                case ConsoleKey.E:
+                case ConsoleKey.Escape:
                     Console.WriteLine("\nDu går nu vidare");
                     break;
                 case ConsoleKey.S:
