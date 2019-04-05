@@ -429,7 +429,7 @@ namespace Bibliotek
                     böcker = UppdateraBibliotek();
                     SkrivLista(böcker);
                     goto Meny;
-                case ConsoleKey.Escape:
+                case ConsoleKey.Escape:
                     Console.WriteLine("\nDu går nu vidare");
                     break;
                 case ConsoleKey.S:
