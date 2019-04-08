@@ -50,12 +50,10 @@ namespace Bibliotek
                 string[] data = s.Split(',');
 
                 temptitel = data[0];
-                
-
                 // kollar om boken finns, isåfall tar den bort den
+                // sparar sedan all text i filen och skriver om filen utan den borttagna boken
                 if (String.Compare(temptitel, bok) == 0)
                 {
-                    // sparar all text i filen och skriver om filen utan den borttagna boken
                     läs.Close();
                     string RensaFil = null;
                     File.WriteAllText("data.txt", RensaFil);
@@ -78,27 +76,22 @@ namespace Bibliotek
             läs.Close();
 
         }
-
+        // Tar bort alla böcker av samma författare
+        // I funktionen jämförs den angvnina författaren med författaren på varje rad
+        // Skriver sedan ut alla böcker utom den med den angivna författaren
         static void RaderaFörfattare(List<Bok> BiblioteketsBöcker)
         {
-            // tar bort alla böcker av samma författare
             StreamReader läs = new StreamReader("data.txt");
-
-
             string författare, s, tempförfattare;
-
+      
             Console.Write("\tvilken författare vill du radera? ");
             författare = Console.ReadLine();
 
             while ((s = läs.ReadLine()) != null)
             {
-
                 string[] data = s.Split(',');
-
-
                 tempförfattare = data[1];
 
-                // samma procedur som i taBortBok() men med författarna
                 if (String.Compare(tempförfattare, författare) == 0)
                 {
 
